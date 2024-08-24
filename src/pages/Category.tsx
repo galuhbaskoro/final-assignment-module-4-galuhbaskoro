@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {Categories} from "../interface/Categories";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -11,22 +11,28 @@ const Category: React.FC = () => {
   const [categories, setCategories] = useState<Categories[]>([]);
   const navigate = useNavigate();
   
-  useEffect(() => {
-    getCategories();
-  }, []);
-
+  
   const handleAddCategory = () => {
     navigate("/addcategory");
   }
   
-  const getCategories = async () => {
+  const getCategories = useCallback( async () => {
     try {
       const response = await axios.get("http://localhost:8080/categories");
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories: ', error);
     }
-  };
+  },[]);
+  
+  useEffect(() => {
+    if(!localStorage.getItem('login-token')){
+      navigate('/login');
+    }else{
+      getCategories();
+    }
+  }, [navigate, getCategories]);
+  
 
   const deleteCategory = async (id:number) => {
     try {

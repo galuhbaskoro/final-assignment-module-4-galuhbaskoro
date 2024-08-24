@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 interface FormData {
@@ -39,7 +39,7 @@ const Login: React.FC = () => {
           showConfirmButton: false,
           timer: 1500
 				}).then(()=>{
-					navigate('/');
+					navigate('/login');
 				});
 			}
 		}
@@ -123,15 +123,25 @@ const Login: React.FC = () => {
 
 					{/* Submit Button */}
 					<div className="mt-5">
-          <button
-            type="submit" 
-            disabled={formik.isSubmitting}
-            className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-2xl shadow-sm hover:bg-green-700"
-          >
-            <i className="bi bi-send-fill mr-1"></i>
-            Login
-          </button>
-        </div>
+						<button
+							type="submit" 
+							disabled={formik.isSubmitting}
+							className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-2xl shadow-sm hover:bg-green-700"
+						>
+							<i className="bi bi-send-fill mr-1"></i>
+							Login
+						</button>
+        	</div>
+
+					{/* Link */}
+					<div className="mt-5">
+						<p className="text-sm text-slate-600">
+							Not yet have account ??, please 
+							<Link to={'/register'}>
+								<span className="hover:text-blue-700 hover:font-medium"> Register here</span>
+							</Link>
+						</p>
+					</div>
 
 				</form>
 			</div>
